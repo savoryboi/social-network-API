@@ -15,4 +15,8 @@ const reactSchema = mongoose.Schema({
         type: Date, 
         default: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
-})
+});
+
+const Reaction = mongoose.model('Reaction', reactSchema);
+
+module.exports = { reactSchema, Reaction };

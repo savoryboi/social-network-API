@@ -12,7 +12,7 @@ api_router.get('/users', (req, res) => {
 
 // Get user by Id
 api_router.get('/users/:id', (req, res) => {
-    User.find({
+    User.findOne({
         _id: req.params.id
     })
     .then(user => {
@@ -33,13 +33,14 @@ api_router.post('/users', (req, res) => {
 });
 
 // update user by _id
-api_router.put('/users/:id', (req, res) => {
-    User.find({ _id: req.params.id })
-        .then(user => {
-            user.update(req.body)
-        })
+api_router.put('/users/:id', async (req, res) => {
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, {$set: req.body})
+
+    user.save()
+    res.json(user)
 });
 
+// delete user by _id
 api_router.delete('/users/:id', (req, res) => {
     User.deleteOne({ _id: req.params.id })
         .then(user => {
