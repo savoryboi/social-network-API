@@ -17,6 +17,5 @@ const reactSchema = mongoose.Schema({
     }
 });
 
-const Reaction = mongoose.model('Reaction', reactSchema);
 
-module.exports = { reactSchema, Reaction };
+module.exports = reactSchema;

@@ -41,11 +41,10 @@ api_router.put('/users/:id', async (req, res) => {
 });
 
 // delete user by _id
-api_router.delete('/users/:id', (req, res) => {
-    User.deleteOne({ _id: req.params.id })
-        .then(user => {
-            res.send(`User has been deleted`)
-        })
+api_router.delete('/users/:id', async (req, res) => {
+    const deleted_user = await User.deleteOne({ _id: req.params.id })
+
+    res.send(`user has been deleted`)
 });
 
 module.exports = api_router;
