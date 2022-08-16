@@ -13,19 +13,14 @@ const userSchema = new mongoose.Schema({
         unique: true
         // match valid email format --> look into mongoose matching vallidation
     }, 
-    thoughts: [thoughtSchema], 
+    thoughts: [{
+        type: thoughtSchema, 
+        ref: 'Thought'
+    }], 
     friends: []
 })
 
 const User = mongoose.model('User', userSchema);
 
-// User.create(
-//     {
-//         username: 'savory', 
-//         email: 'andy@fake.com', 
-//         thoughts: [], 
-//         friends: []
-//     }
-// )
 
 module.exports = User;

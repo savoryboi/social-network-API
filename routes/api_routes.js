@@ -1,13 +1,14 @@
 const api_router = require('express').Router();
 
-const { User, Thought, Reaction } = require('../models');
+const { userInfo } = require('os');
+const { User, Thought } = require('../models');
+
+// USER ROUTES!
 
 // Get all users
-api_router.get('/users', (req, res) => {
-    User.find()
-        .then(data => {
-            res.json(data)
-        })
+api_router.get('/users', async (req, res) => {
+    const users = await User.find().populate('thoughts') //references thoughts property on user model
+     
 });
 
 // Get user by Id
@@ -45,6 +46,33 @@ api_router.delete('/users/:id', async (req, res) => {
     const deleted_user = await User.deleteOne({ _id: req.params.id })
 
     res.send(`user has been deleted`)
+});
+
+
+
+// THOUGHT ROUTES!
+
+api_router.get('/thoughts', async (req, res) => {
+    const all_thoughts = await Thought.find()
+    res.json(all_thoughts);
+});
+
+api_router.get('/thoughts/:id', async (req, res) => {
+    const thought = await Thought.findOne({_id: req.params.id})
+
+    res.json(thought);
+});
+
+api_router.post('/thoughts', async (req, res) => {
+    const user = await User.findOne({ _id: req.body.user_id})
+    
+    const new_thought = await Thought.create({
+        thoughtText: req.body.thoughtText, 
+        username: user.username
+    });
+    user.thoughts.push(new_thought._id)
+
+    res.json(new_thought);
 });
 
 module.exports = api_router;
