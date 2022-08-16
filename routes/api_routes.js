@@ -8,6 +8,7 @@ const { User, Thought } = require('../models');
 // Get all users
 api_router.get('/users', async (req, res) => {
     const users = await User.find().populate('thoughts') //references thoughts property on user model
+    res.json(users)
      
 });
 

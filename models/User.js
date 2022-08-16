@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { mongoose, SchemaTypes } = require('mongoose');
 const { thoughtSchema } = require('./Thought');
 
 const userSchema = new mongoose.Schema({
@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         // match valid email format --> look into mongoose matching vallidation
     }, 
     thoughts: [{
-        type: thoughtSchema, 
+        type: SchemaTypes.ObjectId, 
         ref: 'Thought'
     }], 
     friends: []
