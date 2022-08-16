@@ -26,3 +26,5 @@ const User = mongoose.model('User', userSchema);
 //         friends: []
 //     }
 // )
+
+module.exports = User;

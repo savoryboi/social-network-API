@@ -10,13 +10,11 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.post('/users', (req, res) => {
-    User.create(req.body).then(user => {
-        res.json(user)
-    });
-})
+    res.send('yesss')
+});
 
 db.once('open', () => {
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}!!!!`)
-    })
-})
+    });
+});
