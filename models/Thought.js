@@ -1,8 +1,9 @@
 const mongoose =  require('mongoose');
+const moment = require('moment');
 
 const thoughtSchema =  new mongoose.Schema({
     thoughtText: { type: String, required: true, max: 250 },
-    createdAt: {}, 
+    createdAt: {type: Date, default: moment().format('MMMM Do YYYY, h:mm:ss a')}, 
     username: { type: String, required: true}, 
     reactions: []
 })

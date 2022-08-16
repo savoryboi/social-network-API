@@ -11,19 +11,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use('/api', api_routes)
-// POST ROUTE To create new user
-app.post('/users', (req, res) => {
-    User.create({
-        username: req.body.username, 
-        email: req.body.email
-    }, (err, data) => {
-        if (err) throw err;
 
-        res.json(data)
-    })
-});
-
-// 
 
 
 db.once('open', () => {
