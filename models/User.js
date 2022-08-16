@@ -4,7 +4,7 @@ const { thoughtSchema } = require('./Thought');
 const userSchema = new mongoose.Schema({
     username: {
         type: String, 
-        unique: true, // is this right?
+        unique: true,
         required: true,
     }, 
     email: {
@@ -15,12 +15,14 @@ const userSchema = new mongoose.Schema({
     }, 
     thoughts: [{
         type: SchemaTypes.ObjectId, 
-        ref: 'Thought'
-    }], 
+        ref: 'thought'
+    }],
     friends: []
 })
 
 const User = mongoose.model('User', userSchema);
 
+// User.deleteMany({})
+// .then(() => console.log('users deleted'));
 
 module.exports = User;
