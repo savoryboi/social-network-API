@@ -54,7 +54,7 @@ api_router.delete('/users/:id', async (req, res) => {
 // THOUGHT ROUTES!
 
 api_router.get('/thoughts', async (req, res) => {
-    const all_thoughts = await Thought.find()
+    const all_thoughts = await Thought.find().populate('reactions')
     res.json(all_thoughts);
 });
 
@@ -75,7 +75,7 @@ api_router.post('/thoughts', async (req, res) => {
     user.thoughts.push(new_thought._id)
     user.save()
 
-    res.json(new_thought);
+    res.json(user);
 });
 
 api_router.delete('/thoughts/:thoughtId', async (req, res) => {
@@ -94,12 +94,18 @@ api_router.post('/thoughts/:thoughtId/reactions', async (req, res) => {
     }
     thought_reacted.reactions.push(new_reaction)
 
-    res.json(new_reaction)
+    res.json(thought_reacted)
 });
 
 api_router.delete('/thoughts/:thoughtId/reactions', async (req, res) => {
-    const deleted_reaction = await
-})
+    const thought_for_delete = await Thought.findOneAndUpdate({_id: req.params.thoughtId}, 
+        {$pull: {
+         reactions: {_id: req.body.reactionId}
+        }
+    })
+        // find reaction within the query
+    res.json(thought_for_delete)
+});
 
 
 module.exports = api_router;
