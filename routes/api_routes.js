@@ -7,7 +7,7 @@ const { User, Thought } = require('../models');
 
 // Get all users
 api_router.get('/users', async (req, res) => {
-    const users = await User.find().populate('thoughts') //references thoughts property on user model
+    const users = await User.find().populate('thoughts', 'friends') //references thoughts property on user model
     res.json(users)
      
 });
@@ -103,9 +103,29 @@ api_router.delete('/thoughts/:thoughtId/reactions', async (req, res) => {
          reactions: {_id: req.body.reactionId}
         }
     })
+
         // find reaction within the query
     res.json(thought_for_delete)
 });
+
+// FRIENDS 
+api_router.post('/users/:userId/friends/:friendId', async (req, res) => {
+    const user = await User.findOne({_id: req.params.userId})
+    
+    user.friends.push(req.params.friendId)
+    user.save()
+    res.json(user)
+});
+
+api_router.delete('/users/:userId/friends/:friendId', async (req, res) => {
+    const user = await User.findOneAndUpdate({_id: req.params.userId}, {
+        $pull: {
+            friends: req.params.friendId
+        }}); 
+
+        res.json(user);
+
+})
 
 
 module.exports = api_router;
