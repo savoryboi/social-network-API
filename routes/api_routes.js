@@ -81,6 +81,7 @@ api_router.post('/thoughts', async (req, res) => {
 api_router.delete('/thoughts/:thoughtId', async (req, res) => {
     const deleted_thought = await Thought.deleteOne({_id: req.params.thoughtId})
     console.log(deleted_thought)
+    deleted_thought.save()
     res.send('thought has been deleted');
 })
 
@@ -93,7 +94,7 @@ api_router.post('/thoughts/:thoughtId/reactions', async (req, res) => {
         username: req.body.username, 
     }
     thought_reacted.reactions.push(new_reaction)
-
+    thought_reacted.save()
     res.json(thought_reacted)
 });
 
