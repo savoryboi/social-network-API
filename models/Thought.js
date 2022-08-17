@@ -1,5 +1,5 @@
 const mongoose =  require('mongoose');
-const moment = require('moment');
+const { SchemaTypes } = require('mongoose');
 
 
 const thoughtSchema =  new mongoose.Schema({
@@ -7,6 +7,9 @@ const thoughtSchema =  new mongoose.Schema({
     createdAt: {type: Date, default: Date.now}, 
     username: { type: String, required: true}, 
     reactions: [{
+        reactionId: {
+            type: SchemaTypes.ObjectId
+        },
         reactionBody: {
             type: String, 
             required: true, 

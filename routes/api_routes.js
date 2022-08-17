@@ -84,4 +84,22 @@ api_router.delete('/thoughts/:thoughtId', async (req, res) => {
     res.send('thought has been deleted');
 })
 
+// REACTIONs!
+api_router.post('/thoughts/:thoughtId/reactions', async (req, res) => {
+    const thought_reacted = await Thought.findOne({_id: req.params.thoughtId})
+
+    const new_reaction = { 
+        reactionBody: req.body.reactionBody,
+        username: req.body.username, 
+    }
+    thought_reacted.reactions.push(new_reaction)
+
+    res.json(new_reaction)
+});
+
+api_router.delete('/thoughts/:thoughtId/reactions', async (req, res) => {
+    const deleted_reaction = await
+})
+
+
 module.exports = api_router;
