@@ -64,18 +64,24 @@ api_router.get('/thoughts/:id', async (req, res) => {
     res.json(thought);
 });
 
-// create two routes ??
 api_router.post('/thoughts', async (req, res) => {
     const user = await User.findOne({ _id: req.body.user_id})
     console.log(user);
     const new_thought = await Thought.create({
         thoughtText: req.body.thoughtText, 
-        username: user.username
+        username: user.username, 
+        userId: user._id
     });
     user.thoughts.push(new_thought._id)
     user.save()
 
     res.json(new_thought);
 });
+
+api_router.delete('/thoughts/:thoughtId', async (req, res) => {
+    const deleted_thought = await Thought.deleteOne({_id: req.params.thoughtId})
+    console.log(deleted_thought)
+    res.send('thought has been deleted');
+})
 
 module.exports = api_router;
