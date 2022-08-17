@@ -7,7 +7,7 @@ const { User, Thought } = require('../models');
 
 // Get all users
 api_router.get('/users', async (req, res) => {
-    const users = await User.find().populate('thoughts', 'friends') //references thoughts property on user model
+    const users = await User.find().populate('thoughts').populate('friends') 
     res.json(users)
      
 });
@@ -72,7 +72,7 @@ api_router.post('/thoughts', async (req, res) => {
         username: user.username, 
         userId: user._id
     });
-    user.thoughts.push(new_thought._id)
+    user.thoughts.push(new_thought)
     user.save()
 
     res.json(user);
